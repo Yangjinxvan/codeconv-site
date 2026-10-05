@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeconv — Windows-1252 / ASCII 编码转换器</title>
+    <meta name="description" content="codeconv 是一款 Windows-1252 / ASCII 字符与字节码双向转换的控制台工具，支持批量解码、控制字符识别、插件扩展与彩色终端界面。">
+    <link rel="icon" type="image/png" href="image/logo-icon.ico" sizes="16x16 32x32 48x48 64x64 256x256">
+    <link rel="stylesheet"
+        href="https://miaoda.feishu.cn/fonts/css2?family=JetBrains+Mono:wght@400;700;800&family=Noto+Sans+SC:wght@400;700;800&display=swap">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <!-- ===== 导航 ===== -->
+    <header class="nav">
+        <div class="brand">
+            <img src="image/logo-nav.png" alt="codeconv">
+        </div>
+        <nav class="nav-links" aria-label="页面导航">
+            <a href="#top">首页</a>
+            <a href="#demo">实时转换</a>
+            <a href="#features">功能</a>
+            <a href="#table">码表</a>
+            <a href="#download">下载</a>
+            <a href="#faq">常见问题</a>
+            <a href="./changelog.html">更新日志</a>
+        </nav>
+    </header>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-eyebrow"><span class="dot"></span> v10.10.0 · Windows-1252 / ASCII</div>
+            <h1>把字符与字节，<br><span class="amp">一一对应</span>。</h1>
+            <p class="lead">codeconv 是一个纯控制台的编码转换器：字符转字节码、字节码转字符，双向即时完成。支持 Windows-1252 与 ASCII
+                双编码体系，批量解码、控制字符识别、插件扩展，全部在彩色终端里完成。</p>
+            <div class="hero-cta">
+                <a class="btn" href="#download">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3v12m0 0l-5-5m5 5l5-5" />
+                        <path d="M4 21h16" />
+                    </svg>
+                    立即下载
+                </a>
+                <a class="btn ghost" href="#demo">先试试实时转换</a>
+            </div>
+            <div class="hero-meta">
+                <span>版本 <b>10.10.0</b></span>
+                <span>编码范围 <b>0–255</b></span>
+                <span>模式 <b>编码 / 解码</b></span>
+                <span>扩展 <b>插件 DLL</b></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 实时转换演示 ===== -->
+    <section class="section" id="demo">
+        <div class="section-head">
+            <div class="kicker">Live demo</div>
+            <h2>就在下面这个终端里试</h2>
+            <p>这是与真实程序一致的转换逻辑：编码方向把字符变成字节码，解码方向把空格分隔的编码串变回字符。</p>
+        </div>
+        <div class="demo-shell">
+            <div class="demo-bar">
+                <span class="dots"><span></span><span></span><span></span></span>
+                <span class="demo-title">codeconv — Windows-1252 / ASCII 转换器</span>
+            </div>
+            <div class="demo-body">
+                <div class="demo-banner" id="demoBanner"><span class="ok">Windows-1252 转换器</span> v10.10.0</div>
+                <div class="demo-tabs" role="tablist">
+                    <button type="button" id="tabDecode" class="on">解码 &#8594; 字符</button>
+                    <button type="button" id="tabEncode">编码 &#8592; 字符</button>
+                </div>
+                <div class="demo-input-row">
+                    <input id="demoInput" type="text" placeholder="输入编码值，如 65 66 67；或切换编码模式输入字符" autocomplete="off"
+                        spellcheck="false">
+                    <button class="btn small" id="demoGo" type="button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
+                        </svg>
+                        转换
+                    </button>
+                </div>
+                <div class="demo-out" id="demoOut"><span class="hint">等待输入… 试试 65 66 67，或输入 &eacute;、&euro;</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 特性 ===== -->
+    <section class="section" id="features">
+        <div class="section-head">
+            <div class="kicker">Features</div>
+            <h2>为编码处理设计的功能</h2>
+            <p>每一个功能都服务于一件事：让你在终端里把字符和字节的关系看得清清楚楚。</p>
+        </div>
+        <div class="features">
+            <div class="feat">
+                <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 8h12m0 0l-4-4m4 4l-4 4" />
+                        <path d="M21 16H9m0 0l4-4m-4 4l4 4" />
+                    </svg></div>
+                <h3>双向即时转换</h3>
+                <p>字符到字节码、字节码到字符，两种模式一键切换。整串文本或空格分隔的编码串批量处理，回车即出结果。</p>
+            </div>
+            <div class="feat">
+                <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg></div>
+                <h3>双编码体系</h3>
+                <p>Windows-1252 全 256 字节映射与纯 ASCII（0–127）两套模式，覆盖西欧语言符号、标点与未分配区段，映射关系一目了然。</p>
+            </div>
+            <div class="feat">
+                <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 9V5a1 1 0 011-1h4" />
+                        <path d="M20 9V5a1 1 0 00-1-1h-4" />
+                        <path d="M4 15v4a1 1 0 001 1h4" />
+                        <path d="M20 15v4a1 1 0 01-1 1h-4" />
+                        <path d="M9 12h6" />
+                    </svg></div>
+                <h3>控制字符识别</h3>
+                <p>NUL 到 DEL 的 33 个控制字符全部命名枚举，解码时直接输出 [NUL]、[CR] 这样的名称，不再是一堆不可见字符。</p>
+            </div>
+            <div class="feat">
+                <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5l6.74-6.76z" />
+                        <path d="M16 8l2-2" />
+                        <path d="M2 21l3-1 1 1 1-2 3 1" />
+                    </svg></div>
+                <h3>插件扩展</h3>
+                <p>实现 IContract 接口的 DLL 放入 plugins 目录即可注册新命令，命令冲突时会让你选择保留哪个插件，扩展完全自主。</p>
+            </div>
+            <div class="feat">
+                <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                        <path d="M14 2v6h6" />
+                        <path d="M9 16h6" />
+                    </svg></div>
+                <h3>日志与崩溃转储</h3>
+                <p>Serilog 按天滚动日志，单文件自动限额；意外崩溃时自动写出日志与内存转储文件，问题可回溯、可排查。</p>
+            </div>
+            <div class="feat">
+                <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a9 9 0 100 18 9 9 0 000-18z" />
+                        <path d="M12 7v5l3 2" />
+                    </svg></div>
+                <h3>彩色终端界面</h3>
+                <p>基于 Spectre.Console 的 ANSI 配色、进度条与结构化提示，错误、警告、成功各有颜色，批量大时也能看清进度。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 码表 ===== -->
+    <section class="section" id="table">
+        <div class="section-head">
+            <div class="kicker">Quick reference</div>
+            <h2>常用字符码表</h2>
+            <p>这是 Windows-1252 编码下的一组常见对应关系，完整 256 字节映射在程序里随时可查。</p>
+        </div>
+        <div class="code-table-wrap">
+            <table class="code-table">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>字符</th>
+                        <th>十进制</th>
+                        <th>十六进制</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="ct">A</span></td>
+                        <td>65</td>
+                        <td>0x41</td>
+                        <td>大写字母 A</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">a</span></td>
+                        <td>97</td>
+                        <td>0x61</td>
+                        <td>小写字母 a</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">0</span></td>
+                        <td>48</td>
+                        <td>0x30</td>
+                        <td>数字零</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">!</span></td>
+                        <td>33</td>
+                        <td>0x21</td>
+                        <td>英文感叹号</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">&euro;</span></td>
+                        <td>128</td>
+                        <td>0x80</td>
+                        <td>欧元符号（1252 特有区段）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">&eacute;</span></td>
+                        <td>233</td>
+                        <td>0xE9</td>
+                        <td>带重音的 e，西欧字符</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">&nbsp;空格&nbsp;</span></td>
+                        <td>32</td>
+                        <td>0x20</td>
+                        <td>空格</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">[LF]</span></td>
+                        <td>10</td>
+                        <td>0x0A</td>
+                        <td>换行，控制字符</td>
+                    </tr>
+                    <tr>
+                        <td><span class="ct">[DEL]</span></td>
+                        <td>127</td>
+                        <td>0x7F</td>
+                        <td>删除，控制字符</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bd">中</span></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>中文不在 1252/ASCII 范围内，显示为 [不支持:中]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="legend">控制字符解码时输出为 <span>[名称]</span>，超出编码范围的输入标记为无效。</p>
+    </section>
+
+        <!-- ===== 下载 ===== -->
+    <section class="section" id="download">
+        <div class="section-head">
+            <div class="kicker">Download</div>
+            <h2>下载安装包</h2>
+            <p>一个安装包，内含 32 位 / 64 位、.NET 6 / .NET 10 四个版本，安装向导里按你的环境选择即可。</p>
+        </div>
+        <div class="dl-grid">
+            <div class="dl-card reco">
+                <div class="dl-top">
+                    <span class="dl-tag hot">安装向导</span>
+                    <span class="dl-tag tfm">四合一</span>
+                </div>
+                <div class="dl-name">codeconv 安装包</div>
+                <div class="dl-desc">x86 / x64 x .NET 6 / .NET 10 四个版本，安装时选一个。</div>
+                <div class="dl-foot">
+                    <a class="btn small" href="./download/install/setup.exe">下载 setup.exe</a>
+                    <span class="dl-meta">≈ 3.5 MB</span>
+                </div>
+                <div class="sha256">SHA256: <span class="hash-text">d5a64f4974d47e963b7489a684878dc62c8e58041aab50c37389fde4f7dafa06</span> <button type="button" class="copy-btn" onclick="copyHash(this)">复制</button></div>
+            </div>
+            <div class="dl-card">
+                <div class="dl-top">
+                    <span class="dl-tag hot">便携版</span>
+                    <span class="dl-tag tfm">.NET 10 · x64</span>
+                </div>
+                <div class="dl-name">codeconv 便携版 (.NET 10 · x64)</div>
+                <div class="dl-desc">自包含单文件，内置运行时，解压即用。</div>
+                <div class="dl-foot">
+                    <a class="btn small" href="./download/portable/codeconv-10.10.0-portable-net10-x64.zip">下载</a>
+                    <span class="dl-meta">≈ 31 MB</span>
+                </div>
+                <div class="sha256">SHA256: <span class="hash-text">3bddede87554e59ed2e5ceaf35e06133abdbdc75a1eb52c5087616fd5345a5ec</span> <button type="button" class="copy-btn" onclick="copyHash(this)">复制</button></div>
+            </div>
+            <div class="dl-card">
+                <div class="dl-top">
+                    <span class="dl-tag hot">便携版</span>
+                    <span class="dl-tag tfm">.NET 10 · x86</span>
+                </div>
+                <div class="dl-name">codeconv 便携版 (.NET 10 · x86)</div>
+                <div class="dl-desc">自包含单文件，内置运行时，解压即用。</div>
+                <div class="dl-foot">
+                    <a class="btn small" href="./download/portable/codeconv-10.10.0-portable-net10-x86.zip">下载</a>
+                    <span class="dl-meta">≈ 29 MB</span>
+                </div>
+                <div class="sha256">SHA256: <span class="hash-text">c705a12f9c0178a31081f352e035735455d7a2cfee53336ab52156d006467e6e</span> <button type="button" class="copy-btn" onclick="copyHash(this)">复制</button></div>
+            </div>
+            <div class="dl-card">
+                <div class="dl-top">
+                    <span class="dl-tag hot">便携版</span>
+                    <span class="dl-tag tfm">.NET 6 · x64</span>
+                </div>
+                <div class="dl-name">codeconv 便携版 (.NET 6 · x64)</div>
+                <div class="dl-desc">自包含单文件，内置运行时，解压即用。</div>
+                <div class="dl-foot">
+                    <a class="btn small" href="./download/portable/codeconv-10.10.0-portable-net6-x64.zip">下载</a>
+                    <span class="dl-meta">≈ 28 MB</span>
+                </div>
+                <div class="sha256">SHA256: <span class="hash-text">558b9adb345d3779d1a9b0ddf8b7e0c473b63fc5e12de92818cd6a3aa35ad7d0</span> <button type="button" class="copy-btn" onclick="copyHash(this)">复制</button></div>
+            </div>
+            <div class="dl-card">
+                <div class="dl-top">
+                    <span class="dl-tag hot">便携版</span>
+                    <span class="dl-tag tfm">.NET 6 · x86</span>
+                </div>
+                <div class="dl-name">codeconv 便携版 (.NET 6 · x86)</div>
+                <div class="dl-desc">自包含单文件，内置运行时，解压即用。</div>
+                <div class="dl-foot">
+                    <a class="btn small" href="./download/portable/codeconv-10.10.0-portable-net6-x86.zip">下载</a>
+                    <span class="dl-meta">≈ 26 MB</span>
+                </div>
+                <div class="sha256">SHA256: <span class="hash-text">cf12b50ae1d446715a091a22a6fbe51e7ecde641afff317c94d0f89683a245e2</span> <button type="button" class="copy-btn" onclick="copyHash(this)">复制</button></div>
+            </div>
+            <div class="dl-card">
+                <div class="dl-top">
+                    <span class="dl-tag hot">源码</span>
+                    <span class="dl-tag tfm">C# / .NET 6+</span>
+                </div>
+                <div class="dl-name">codeconv 源码包 (.NET C#)</div>
+                <div class="dl-desc">完整 C# 主工程源码，含 codeconv / contract / style 三个子工程，可直接编译构建。</div>
+                <div class="dl-foot">
+                    <a class="btn small" href="./download/source/codeconv-10.10.0-source.zip">下载源码</a>
+                    <span class="dl-meta">≈ 55 KB</span>
+                </div>
+                <div class="sha256">SHA256: <span class="hash-text">0b3299866d01729739a086aea3a12bb011d92c4b5a46a79e429edfa3a6480144</span> <button type="button" class="copy-btn" onclick="copyHash(this)">复制</button></div>
+            </div>
+        </div>
+        <div class="download-old">
+            <a href="./download-old.html">下载旧版本</a>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section faq" id="faq">
+        <div class="section-head">
+            <div class="kicker">FAQ</div>
+            <h2>常见问题</h2>
+        </div>
+        <details open>
+            <summary>支持中文输入吗？<span class="plus">+</span></summary>
+            <div class="faq-body">编码模式下，中文不在 Windows-1252 / ASCII 的可表示范围内，会如实标记为 <code>[不支持:中]</code>，不会静默乱转。解码模式只接受
+                0–255 范围内的数值，超出范围提示无效。</div>
+        </details>
+        <details>
+            <summary>一次能转换很多个吗？<span class="plus">+</span></summary>
+            <div class="faq-body">可以。解码模式输入空格分隔的编码串（如 <code>72 101 108 108 111</code>）即可一次还原整句；编码模式直接输入整段文本，逐字符转换并带进度条。
+            </div>
+        </details>
+        <details>
+            <summary>需要安装 .NET 运行时吗？<span class="plus">+</span></summary>
+            <div class="faq-body">发布的 exe 是框架依赖版：net10.0 版本需要 .NET 10 运行时，net6.0 版本需要 .NET 6 运行时。如未安装运行时，可在安装程序中勾选安装对应版本的运行时（默认勾选）。
+            </div>
+        </details>
+        <details>
+            <summary>插件怎么安装？<span class="plus">+</span></summary>
+            <div class="faq-body">把实现了 <code>IContract</code> 接口的 DLL 放到系统共享目录
+                <code>C:\ProgramData\codeconv\plugins</code> 下，启动时自动扫描加载。多个插件命令冲突时，程序会提示你保留旧插件还是使用新插件。</div>
+        </details>
+        <details>
+            <summary>32 位和 64 位怎么选？<span class="plus">+</span></summary>
+            <div class="faq-body">x86 版本兼容所有 Windows 环境，处理普通输入完全够用；x64 版本适合大量数据的批量转换场景，前提是机器具备对应架构的 .NET 运行时。</div>
+        </details>
+    </section>
+
+    <!-- ===== 底部 ===== -->
+    <footer class="footer">
+        <div>
+            <span class="fmono">codeconv v10.10.0</span> · Windows-1252 / ASCII 编码转换器<br>
+            © 2026 codeconv
+        </div>
+        <a class="to-top" href="#top" data-top>回到顶部 ↑</a>
+    </footer>
+
+    <script>
+        (function () {
+            'use strict';
+            var $ = function (id) { return document.getElementById(id); };
+            var mode = 'decode';
+
+            var w1252 = {
+                128: '\u20AC', 129: '[未分配]', 130: '\u201A', 131: '\u0192', 132: '\u201E', 133: '\u2026', 134: '\u2020',
+                135: '\u2021', 136: '\u02C6', 137: '\u2030', 138: '\u0160', 139: '\u2039', 140: '\u0152', 141: '[未分配]', 
+                142: '\u017D', 143: '[未分配]', 144:'[未分配]', 145: '\u2018', 146: '\u2019', 147: '\u201C', 148: '\u201D',
+                149: '\u2022', 150: '\u2013', 151: '\u2014', 152: '\u02DC', 153: '\u2122', 154: '\u0161', 155: '\u203A', 
+                156: '\u0153', 157: '[未分配]', 158: '\u017E', 159: '\u0178', 160: '\u00A0', 161: '\u00A1', 162: '\u00A2',
+                163: '\u00A3', 164: '\u00A4', 165: '\u00A5', 166: '\u00A6', 167: '\u00A7', 168: '\u00A8', 169: '\u00A9',
+                170: '\u00AA', 171: '\u00AB', 172: '\u00AC', 173: '\u00AD', 174: '\u00AE', 175: '\u00AF', 176: '\u00B0',
+                177: '\u00B1', 178: '\u00B2', 179: '\u00B3', 180: '\u00B4', 181: '\u00B5', 182: '\u00B6', 183: '\u00B7',
+                184: '\u00B8', 185: '\u00B9', 186: '\u00BA', 187: '\u00BB', 188: '\u00BC', 189: '\u00BD', 190: '\u00BE',
+                191: '\u00BF', 192: '\u00C0', 193: '\u00C1', 194: '\u00C2', 195: '\u00C3', 196: '\u00C4', 197: '\u00C5',
+                198: '\u00C6', 199: '\u00C7', 200: '\u00C8', 201: '\u00C9', 202: '\u00CA', 203: '\u00CB', 204: '\u00CC',
+                205: '\u00CD', 206: '\u00CE', 207: '\u00CF', 208: '\u00D0', 209: '\u00D1', 210: '\u00D2', 211: '\u00D3',
+                212: '\u00D4', 213: '\u00D5', 214: '\u00D6', 215: '\u00D7', 216: '\u00D8', 217: '\u00D9', 218: '\u00DA', 
+                219: '\u00DB', 220: '\u00DC', 221: '\u00DD', 222: '\u00DE', 223: '\u00DF', 224: '\u00E0', 225: '\u00E1',
+                226: '\u00E2', 227: '\u00E3', 228: '\u00E4', 229: '\u00E5', 230: '\u00E6', 231: '\u00E7', 232: '\u00E8',
+                233: '\u00E9', 234: '\u00EA', 235: '\u00EB', 236: '\u00EC', 237: '\u00ED', 238: '\u00EE', 239: '\u00EF',
+                240: '\u00F0', 241: '\u00F1', 242: '\u00F2', 243: '\u00F3', 244: '\u00F4', 245: '\u00F5', 246: '\u00F6',
+                247: '\u00F7', 248: '\u00F8', 249: '\u00F9', 250: '\u00FA', 251: '\u00FB', 252: '\u00FC', 253: '\u00FD',
+                254: '\u00FE', 255: '\u00FF'
+            };
+            var ctrl = ['NUL', 'SOH', 'STX', 'ETX', 'EOT', 'ENQ', 'ACK', 'BEL', 'BS', 'HT', 'LF', 'VT', 'FF', 'CR', 'SO', 'SI',
+                'DLE', 'DC1', 'DC2', 'DC3', 'DC4', 'NAK', 'SYN', 'ETB', 'CAN', 'EM', 'SUB', 'ESC', 'FS', 'GS', 'RS', 'US'];
+            var ctrlName = {};
+            ctrl.forEach(function (n, i) { ctrlName[i] = n; });
+            ctrlName[127] = 'DEL';
+            var charToCode = {};
+            for (var i = 0; i < 128; i++) { charToCode[String.fromCharCode(i)] = i; }
+            for (var k in w1252) { if (w1252[k] !== '\uFFFD') { charToCode[w1252[k]] = parseInt(k, 10); } }
+
+            function esc(s) {
+                return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+            }
+            function html(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+            function decodeLine(raw) {
+                var parts = raw.split(/\s+/).filter(Boolean);
+                if (!parts.length) return '<span class="hint">没有可解码的内容</span>';
+                var lines = [];
+                parts.forEach(function (p) {
+                    var n = parseInt(p, 10);
+                    if (isNaN(n)) { lines.push('<span class="arrow">' + esc(p) + '</span> <span class="bad">[非数字] &#10005;</span>'); return; }
+                    if (n < 0 || n > 255) { lines.push('<span class="arrow">' + esc(p) + '</span> <span class="bad">[无效] &#10005;</span>'); return; }
+                    var out;
+                    if (ctrlName[n] !== undefined) { out = '[控制字符:' + ctrlName[n] + ']'; }
+                    else if (w1252[n]) { out = w1252[n]; }
+                    else { out = String.fromCharCode(n); }
+                    lines.push('<span class="arrow">' + esc(p) + '</span> &#8594; <span class="ctrl">' + html(out) + '</span>');
+                });
+                return lines.join('<br>');
+            }
+
+            function encodeLine(raw) {
+                if (!raw.length) return '<span class="hint">没有可编码的内容</span>';
+                var lines = [];
+                for (var i = 0; i < raw.length; i++) {
+                    var c = raw[i];
+                    var code = charToCode[c];
+                    var out;
+                    if (code !== undefined) { out = '<span class="ctrl">' + code + '</span>'; }
+                    else { out = '<span class="bad">[不支持:' + esc(c) + '] &#10005;</span>'; }
+                    lines.push('<span class="arrow">' + esc(c) + '</span> &#8594; ' + out);
+                }
+                return lines.join('<br>');
+            }
+
+            function run() {
+                var val = $('demoInput').value.trim();
+                var out = $('demoOut');
+                if (!val) { out.innerHTML = '<span class="hint">输入内容为空，先输入点什么再转换。</span>'; return; }
+                out.innerHTML = mode === 'decode' ? decodeLine(val) : encodeLine(val);
+            }
+
+            function setMode(m) {
+                mode = m;
+                $('tabDecode').className = m === 'decode' ? 'on' : '';
+                $('tabEncode').className = m === 'encode' ? 'on' : '';
+                $('demoInput').placeholder = m === 'decode'
+                    ? '输入编码值，如 65 66 67'
+                    : '输入字符，如 Hello € é';
+                $('demoBanner').innerHTML = m === 'decode'
+                    ? '<span class="ok">解码模式</span>  &#8594; 编码值 &#8594; 字符'
+                    : '<span class="ok">编码模式</span>  &#8594; 字符 &#8594; 编码值';
+                $('demoOut').innerHTML = '<span class="hint">等待输入…</span>';
+            }
+
+            $('tabDecode').addEventListener('click', function () { setMode('decode'); });
+            $('tabEncode').addEventListener('click', function () { setMode('encode'); });
+            $('demoGo').addEventListener('click', run);
+            $('demoInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); });
+            document.querySelector('[data-top]').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            document.querySelectorAll('.faq details').forEach(function (d) {
+                var summary = d.querySelector('summary');
+                function expand() {
+                    d.classList.add('open');
+                }
+                function collapse() {
+                    d.classList.remove('open');
+                }
+                if (d.hasAttribute('open')) {
+                    d.classList.add('open');
+                }
+                d.setAttribute('open', '');
+                summary.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (d.classList.contains('open')) {
+                        collapse();
+                    } else {
+                        expand();
+                    }
+                });
+            });
+        })();
+    </script>
+<script>
+function copyHash(btn){
+  const text = btn.previousElementSibling.textContent.trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    const old = btn.textContent;
+    btn.textContent = "已复制!";
+    setTimeout(()=>btn.textContent = old, 1500);
+  }).catch(()=>alert("复制失败，请手动复制：" + text));
+}
+</script>
+</body>
+
+</html>
