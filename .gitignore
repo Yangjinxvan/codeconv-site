@@ -1,0 +1,24 @@
+# 代码转换器（codeconv）项目的 Git 忽略文件
+# 无用文件
+/codeconv.iso
+/codeconv.zip
+
+# 编辑器配置
+.vscode/
+.idea/
+.vs/
+
+# 系统回收站
+/$RECYCLE.BIN/
+
+# 系统卷信息（无法访问，忽略）
+/System Volume Information/
+
+# 磁盘根的系统隐藏文件
+/hiberfil.sys
+/pagefile.sys
+/swapfile.sys
+
+# 编辑器、系统缓存
+.DS_Store
+Thumbs.db

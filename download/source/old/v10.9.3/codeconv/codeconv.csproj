@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net6.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UseTopLevelStatements>false</UseTopLevelStatements>
+		<Platforms>x86;x64</Platforms>
+		<ApplicationIcon>logo-icon.ico</ApplicationIcon>
+	</PropertyGroup>
+	<ItemGroup> 
+	  <PackageReference Include="Serilog" Version="4.4.0" />
+	  <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+	  <PackageReference Include="Spectre.Console" Version="0.57.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\contract\contract.csproj" />
+	  <ProjectReference Include="..\style\style.csproj" />
+	</ItemGroup>
+</Project>

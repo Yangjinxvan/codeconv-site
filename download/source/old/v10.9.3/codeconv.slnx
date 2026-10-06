@@ -1,0 +1,17 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="codeconv/codeconv.csproj">
+    <BuildType Project="Debug" />
+    <Platform Project="x86" />
+  </Project>
+  <Project Path="contract/contract.csproj">
+    <BuildType Project="Debug" />
+    <Platform Project="x86" />
+  </Project>
+  <Project Path="style/style.csproj">
+    <BuildType Project="Debug" />
+    <Platform Project="x86" />
+  </Project>
+</Solution>

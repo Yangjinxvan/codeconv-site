@@ -1,0 +1,9 @@
+[AutoRun]
+icon=image/logo-icon.ico
+label=codeconv
+shellexecute=index.html
+action=打开CodeConv网页
+
+shell=openfolder
+shell\openfolder\command=explorer.exe .
+shell\openfolder=打开文件夹查看文件

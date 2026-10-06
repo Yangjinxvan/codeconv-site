@@ -1,0 +1,15 @@
+# .NET
+bin/
+obj/
+publish/
+*.user
+*.suo
+*.log
+
+# 目录
+.vs/
+.codeconv-publish/
+
+# 文件
+*.tmp
+*.cache
